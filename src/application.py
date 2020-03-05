@@ -20,6 +20,11 @@ app.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
 CORS(app, supports_credentials=True)
 
 
+def init_dirs():
+    if not os.path.exists(app.config['UPLOAD_FOLDER']):
+        os.makedirs(r'' + app.config['UPLOAD_FOLDER'])
+
+
 def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
@@ -35,6 +40,7 @@ def get_file(filename):
 
 @app.route('/', methods=['GET'])
 def index():
+    init_dirs()
     return render_template('index.html')
 
 
