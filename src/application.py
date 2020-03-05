@@ -48,7 +48,7 @@ def update():
             filename = file.filename
             name = str(now) + filename
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], name))
-            files.append(FileMode(filename, 'http://127.0.0.1:8000/image/' + name.rsplit('.', 1)[0]))
+            files.append(FileMode(filename, url_for('index', _external=True) + 'image/' + name.rsplit('.', 1)[0]))
     return json.dumps(files, default=file2dict, )
 
 
