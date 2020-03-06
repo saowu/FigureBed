@@ -5,64 +5,45 @@
 
 __author__ = 'saowu'
 
-import json, time, os, re
-
-from flask import Flask, url_for, render_template, request, jsonify, Response, abort
-from flask_cors import CORS
-
-from src.mode import FileMode, file2dict
+import os, json
+from flask import Flask, url_for, render_template, request, Response
+from src import utils, mode
 
 app = Flask('FigureBed')
-
 app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.dirname(__file__)) + '/uploads/'
-app.config['ALLOWED_EXTENSIONS'] = set(['pdf', 'png', 'jpg', 'jpeg', 'gif'])
+app.config['ALLOWED_EXTENSIONS'] = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-CORS(app, supports_credentials=True)
-
-
-def init_dirs():
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(r'' + app.config['UPLOAD_FOLDER'])
-
-
-def allowed_file(filename):
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
-
-
-def get_file(filename):
-    listdir = os.listdir(app.config['UPLOAD_FOLDER'])
-    for name in listdir:
-        if re.match(filename + '.*', name):
-            filename = name
-    return [open(app.config['UPLOAD_FOLDER'] + filename, 'rb'), "image/" + name.rsplit('.', 1)[1]]
+accept_type = {"pdf": "application/pdf", "jpeg": "image/jpeg", "jpg": "image/jpeg", "gif": "image/gif",
+               "png": "image/png"}
 
 
 @app.route('/', methods=['GET'])
 def index():
-    init_dirs()
     return render_template('index.html')
 
 
 @app.route('/upload', methods=['POST'])
-def update():
-    getlist = request.files.getlist('files')
+def upload_images():
+    file_list = request.files.getlist('files')
     files = []
-    for file in getlist:
-        if file and allowed_file(file.filename):
-            now = time.strftime("%Y-%m-%d-%H_%M_%S", time.localtime(time.time()))
-            filename = file.filename
-            name = str(now) + filename
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], name))
-            files.append(FileMode(filename, url_for('index', _external=True) + 'image/' + name.rsplit('.', 1)[0]))
-    return json.dumps(files, default=file2dict, )
+    for file in file_list:
+        old_filename = file.filename
+        if file and utils.allowed_file(old_filename):
+            md5_string = utils.get_name_md5(old_filename.rsplit('.', 1)[0])
+            new_filename = md5_string + "." + old_filename.rsplit('.', 1)[1]
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+            files.append(mode.FileMode(old_filename, url_for('index', _external=True) + 'image/' + md5_string))
+        else:
+            files.append(mode.FileMode(old_filename, "不符合文件类型"))
+    return json.dumps(files, default=mode.file2dict, )
 
 
 @app.route('/image/<filename>', methods=['GET'])
-def get_images(filename):
-    image = get_file(filename)
-    return Response(image[0], mimetype=str(image[1]))
+def download_images(filename):
+    image_info = utils.get_file_stream(filename)
+    return Response(image_info[0], mimetype=accept_type[image_info[1]])
 
 
 if __name__ == '__main__':
+    utils.init_dirs()
     app.run(debug=False, port='8000', host='127.0.0.1')

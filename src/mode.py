@@ -15,8 +15,8 @@ class FileMode(object):
         return super().__str__()
 
 
-def file2dict(fe):
+def file2dict(obj):
     return {
-        'name': fe.name,
-        'path': fe.path
+        'name': obj.name,
+        'path': obj.path
     }
