@@ -1,4 +1,4 @@
-
+/*Figure bed*/
 body {
     position: relative;
 }
@@ -141,13 +141,6 @@ h4 code {
     background-color: #f9f9f9;
     border-color: #f9f9f9;
 }
-
-
-/*
- * Footer
- *
- * Separated section of content at the bottom of all pages, save the homepage.
- */
 
 .bs-docs-footer {
     padding-top: 20px;
@@ -1558,8 +1551,12 @@ h1[id] {
     margin-bottom: 5px;
 }
 
-.bs-dropzone .glyphicon-download-alt {
+.bs-dropzone .glyphicon-level-up {
     font-size: 40px;
+}
+
+.bs-dropzone .glyphicon-download-alt {
+    font-size: 30px;
 }
 
 .bs-dropzone hr {
@@ -1759,7 +1756,6 @@ h1[id] {
     background-color: #0269c2;
 }
 
-/* Nullify ill-advised printing of hrefs; see #18711 */
 @media print {
     a[href]:after {
         content: "" !important;

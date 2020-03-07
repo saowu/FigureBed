@@ -49,16 +49,16 @@
                 <div class="bs-dropzone">
                     <div id="display-1">
                         <div class="import-header">
-                            <span class="glyphicon glyphicon-download-alt" aria-hidden="true"></span>
+                            <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
                         </div>
                         <p class="lead">上传你的 <code>pdf, png, jpg, jpeg, gif</code> 文件。</p>
                         <label id="import-manual-trigger" class="btn-link">
-                            选择文件
+                            手动选择
                             <input type="file" accept="application/pdf,image/jpeg,image/png,image/gif" id="upLoad"
                                    class="hidden" multiple="multiple">
                         </label>
                     </div>
-                    <!--         隐藏           -->
+                    <!--         隐藏  start        -->
                     <div id="display-2" style="margin-top: 45px;display: none">
                         <h3>文件上传进度......</h3>
                         <div class="progress">
@@ -68,17 +68,29 @@
                             </div>
                         </div>
                     </div>
+                    <!--        隐藏  end           -->
                 </div>
             </div>
-        </div>
-        <div class="col-md-12">
-
         </div>
 
     </div>
 
     <div class="row">
+
         <div class="col-md-12" id="format">
+            <div class="alert alert-danger alert-dismissible" style="display: none">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <strong>上传失败！</strong>请重新选择文件上传！
+            </div>
+            <div class="alert alert-success alert-dismissible" style="display: none">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                        aria-hidden="true">&times;</span>
+                </button>
+                <strong>上传成功！</strong>已生成图片链接，请复制链接或下载
+                <a class="label label-info" href="#" download="upload_file.csv">csv文件</a>！
+            </div>
         </div>
     </div>
 

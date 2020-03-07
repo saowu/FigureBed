@@ -13,16 +13,9 @@
 ```
 Package      Version
 ------------ -------
-Click        7.0    
 Flask        1.1.1  
-itsdangerous 1.1.0  
 Jinja2       2.11.1 
-MarkupSafe   1.1.1  
-pip          19.0.3 
-setuptools   40.8.0 
-six          1.14.0 
-Werkzeug     1.0.0  
-
+pandas       1.0.1 
 ```
 #### UI展示
 
