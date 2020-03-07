@@ -113,6 +113,11 @@ def get_link_dict(_file):
 
 
 def remove_image(filename):
+    '''
+    删除文件
+    :param filename: 文件名
+    :return: True/False
+    '''
     listdir = os.listdir(app.config['UPLOAD_FOLDER'])
     for _name in listdir:
         if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', _name):
