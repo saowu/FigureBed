@@ -1,6 +1,12 @@
 # FigureBed
----
+
 >Flask 个人图床
+
+[![GitHub issues](https://img.shields.io/github/issues/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/issues)
+[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/network)
+[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/stargazers)
+[![GitHub license](https://img.shields.io/github/license/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed)
+
 
 #### 功能支持
 ```
@@ -8,14 +14,6 @@
 2.支持多种链接格式
 3.可以通过链接自行管理图片文件
 ```
-
-
-
-[![GitHub issues](https://img.shields.io/github/issues/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/issues)
-[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/network)
-[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/stargazers)
-[![GitHub license](https://img.shields.io/github/license/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed)
-
 
 #### 版本配置
 
