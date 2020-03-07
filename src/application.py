@@ -7,7 +7,7 @@ __author__ = 'saowu'
 
 import os, json
 from flask import Flask, url_for, render_template, request, Response, abort
-from src import utils, mode
+from src import utils, model
 
 app = Flask('FigureBed')
 app.config['UPLOAD_FOLDER'] = os.path.dirname(os.path.dirname(__file__)) + '/uploads/'
@@ -35,16 +35,16 @@ def upload_images():
                 md5_string = utils.get_name_md5(old_filename.rsplit('.', 1)[0])
                 new_filename = md5_string + "." + old_filename.rsplit('.', 1)[1]
                 file.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
-                files.append(mode.FileMode(old_filename, url_for('index', _external=True) + 'image/' + md5_string))
+                files.append(model.FileMode(old_filename, url_for('index', _external=True) + 'image/' + md5_string))
             else:
-                files.append(mode.FileMode(old_filename, "不符合文件类型"))
+                files.append(model.FileMode(old_filename, "不符合文件类型"))
         # 生成csv
         csv_path = utils.list2csv(files)
         # 结果集
         result = {"fcsv": url_for('index', _external=True) + 'record/' + csv_path, "paths": files}
-        return json.dumps(result, default=mode.file2dict, )
+        return json.dumps(result, default=model.file2dict, )
     except Exception as e:
-        print('Error:', e)
+        print('Upload Error:', e)
         abort(500)
 
 
@@ -62,6 +62,14 @@ def download_records(filename):
     if csv_info is None:
         abort(404)
     return Response(csv_info[0], mimetype=accept_type[csv_info[1]])
+
+
+@app.route('/removal/<filename>', methods=['GET'])
+def remove_images(filename):
+    is_remove = utils.remove_image(filename)
+    if is_remove is False:
+        abort(404)
+    return '<h1>Remove Success！</h1>'
 
 
 if __name__ == '__main__':

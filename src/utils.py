@@ -10,6 +10,7 @@ import os
 import re
 import time
 import pandas as pd
+from flask import url_for
 
 from src.application import app
 
@@ -42,9 +43,9 @@ def get_image_stream(filename):
     :return: 文件流，文件类型
     '''
     listdir = os.listdir(app.config['UPLOAD_FOLDER'])
-    for name in listdir:
-        if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', name):
-            filename = name
+    for _name in listdir:
+        if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', _name):
+            filename = _name
             break
     if filename in listdir:
         return [open(app.config['UPLOAD_FOLDER'] + filename, 'rb'), filename.rsplit('.', 1)[1]]
@@ -88,9 +89,36 @@ def list2csv(file_list):
     '''
     _data = []
     for _file in file_list:
-        _data.append({"file": _file.name, "path": _file.path})
-    frame_data = pd.DataFrame(columns=["file", "path"], data=_data)
+        _data.append(get_link_dict(_file))
+    frame_data = pd.DataFrame(columns=["file", "link", "markdown", "removal", "html", "bbcode"], data=_data)
     csv_name = get_name_md5("record")
     csv_path = app.config['RECORD_FOLDER'] + csv_name + ".csv"
     frame_data.to_csv(csv_path)
     return csv_name
+
+
+def get_link_dict(_file):
+    '''
+    构建各种链接
+    :param _file: file_mode
+    :return: dict
+    '''
+    _markdown = '![{0}]({1})'.format(_file.name, _file.path)
+    _bbcode = '[url={0}][img]{1}[/img][/url]'.format(_file.path, _file.path)
+    _html = '<a href="{0}" target="_blank"><img src="{1}"></a>'.format(_file.path, _file.path)
+    _removal = _file.path.replace('image', 'removal')
+
+    return {"file": _file.name, "link": _file.path, "markdown": _markdown, "html": _html, "bbcode": _bbcode,
+            "removal": _removal}
+
+
+def remove_image(filename):
+    listdir = os.listdir(app.config['UPLOAD_FOLDER'])
+    for _name in listdir:
+        if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', _name):
+            try:
+                os.remove(app.config['UPLOAD_FOLDER'] + _name)
+                return True
+            except OSError as e:
+                print("Remove Error:", e)
+    return False
