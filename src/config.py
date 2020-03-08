@@ -20,7 +20,7 @@ SERVER_HOST = '127.0.0.1'
 SERVER_PORT = '5000'
 DEBUG = False
 # mysql
-DB_HOST = '127.0.0.1'
+DB_HOST = '118.89.237.69'
 DB_PORT = '3306'
 DATABASE = 'figurebed'
 USER_NAME = 'root'
@@ -29,3 +29,22 @@ PASSWORD = '123456'
 LOG_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + "/fb_logs/"
 LOG_FILENAME = 'logger-' + time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".log"
 LOG_LEVEL = logging.WARNING
+
+# 定时任务
+JOBS = [
+    {
+        'id': 'clean_csv_files',
+        'func': 'config:clean_csv_files',
+        'trigger': 'interval',
+        # 'days': 3,
+        'minutes': 1,
+
+    }
+]
+
+
+def clean_csv_files():
+    ls = os.listdir(RECORD_FOLDER)
+    for name in ls:
+        os.remove(RECORD_FOLDER + name)
+        print('deleting-->', name)

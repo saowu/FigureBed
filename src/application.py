@@ -10,6 +10,8 @@ import logging
 import os
 
 from flask import Flask, url_for, render_template, request, Response, abort
+from flask_apscheduler import APScheduler
+
 from src import service, model, config
 
 ACCEPT_TYPE = {"pdf": "application/pdf", "jpeg": "image/jpeg", "jpg": "image/jpeg", "gif": "image/gif",
@@ -104,4 +106,7 @@ def remove_images(filename):
 
 
 if __name__ == '__main__':
+    scheduler = APScheduler()
+    scheduler.init_app(app)
+    scheduler.start()
     app.run(debug=app.config['DEBUG'], host=app.config['SERVER_HOST'], port=app.config['SERVER_PORT'])
