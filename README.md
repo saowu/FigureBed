@@ -27,6 +27,7 @@ Jinja2       2.11.1
 pandas       1.0.1 
 DBUtils      1.3 
 PyMySQL      0.9.3 
+Flask-APScheduler 1.11.0
 ```
 #### UI展示
 
