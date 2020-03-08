@@ -10,18 +10,14 @@ import os
 import time
 import pandas as pd
 
-from src.application import app, db
+from src import dbutils
+from src.application import app
 
+ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
-def init_dirs():
-    '''
-    初始化上传路径：UPLOAD_FOLDER，RECORD_FOLDER
-    :return:
-    '''
-    if not os.path.exists(app.config['UPLOAD_FOLDER']):
-        os.makedirs(r'' + app.config['UPLOAD_FOLDER'])
-    if not os.path.exists(app.config['RECORD_FOLDER']):
-        os.makedirs(r'' + app.config['RECORD_FOLDER'])
+# 初始化数据库连接池
+db = dbutils.DBUtil(app.config['DB_HOST'], app.config['DB_PORT'], app.config['DATABASE'], app.config['USER_NAME'],
+                    app.config['PASSWORD'])
 
 
 def allowed_file(filename):
@@ -31,7 +27,20 @@ def allowed_file(filename):
     :return:true/false
     '''
     return '.' in filename and \
-           filename.rsplit('.', 1)[1] in app.config['ALLOWED_EXTENSIONS']
+           filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+
+def save_images(file):
+    '''
+    保存image文件
+    :param file: image
+    :return:
+    '''
+    old_filename = file.filename
+    md5_string = get_name_md5(old_filename.rsplit('.', 1)[0])
+    new_filename = md5_string + "." + old_filename.rsplit('.', 1)[1]
+    file.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+    return md5_string, new_filename
 
 
 def get_image_stream(filename):
@@ -81,7 +90,7 @@ def list2csv(file_list):
     _data = []
     for _file in file_list:
         _data.append(get_link_dict(_file))
-    frame_data = pd.DataFrame(columns=["file", "link", "markdown", "removal", "html", "bbcode"], data=_data)
+    frame_data = pd.DataFrame(columns=["file", "link", "markdown", "html", "bbcode", "removal"], data=_data)
     csv_name = get_name_md5("record")
     csv_path = app.config['RECORD_FOLDER'] + csv_name + ".csv"
     frame_data.to_csv(csv_path)
@@ -117,7 +126,7 @@ def remove_image(filename):
         try:
             os.remove(file_model["path"])
         except OSError as e:
-            print("Remove Error:", e)
+            app.logger.error("remove_image Error:", e)
         if db.delete_one(sql_d, filename) == 1:
             return True
     else:
@@ -134,8 +143,11 @@ def insert_files(files):
     for _file in files:
         data.append((_file.md5_name, _file.local_path, _file.file_name.rsplit('.', 1)[1]))
     sql = "INSERT INTO t_files (name,path,type) VALUES (%s,%s,%s);"
-    result = db.insert_many(sql, data)
-    if result == len(files):
-        return True
-    else:
-        return False
+    try:
+        result = db.insert_many(sql, data)
+        if result == len(files):
+            return True
+        else:
+            return False
+    except Exception as e:
+        app.logger.error("insert_files Error:", e)
