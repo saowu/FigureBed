@@ -20,7 +20,7 @@ SERVER_HOST = '127.0.0.1'
 SERVER_PORT = '5000'
 DEBUG = False
 # mysql
-DB_HOST = '118.89.237.69'
+DB_HOST = '127.0.0.1'
 DB_PORT = '3306'
 DATABASE = 'figurebed'
 USER_NAME = 'root'
