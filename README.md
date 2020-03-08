@@ -10,10 +10,11 @@
 
 #### 功能支持
 ```
-1.支持导出csv上传路径
-2.支持多种链接格式
-3.可以通过链接自行管理图片文件
-4.使用mysql数据库
+1.支持多文件上传（set max=5）
+2.支持导出csv上传路径
+3.支持返回多种链接格式 （link, markdown, html, bbcode，removal）
+4.可以通过removal链接自行删除图片文件
+5.使用mysql数据库
 ```
 
 #### 版本配置
@@ -29,6 +30,6 @@ PyMySQL      0.9.3
 ```
 #### UI展示
 
-![FireShot Capture 009 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/02/29/IaENvmkzJ7t3w42.png)
+![FireShot Capture 016 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/08/w2DySmnMEWtFNck.png)
 
 ![FireShot Capture 015 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/07/q3H1JDFRSwCLm87.png)
