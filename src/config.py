@@ -8,7 +8,10 @@ __author__ = 'saowu'
 import logging
 import os
 
-# flask
+'''
+ flask config
+'''
+
 import time
 
 # images path
@@ -44,6 +47,10 @@ JOBS = [
 
 
 def clean_csv_files():
+    '''
+    清空csv文件
+    :return:
+    '''
     ls = os.listdir(RECORD_FOLDER)
     for name in ls:
         os.remove(RECORD_FOLDER + name)

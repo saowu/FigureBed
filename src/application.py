@@ -68,12 +68,12 @@ def upload_images():
                 files.append(model.FileMode(old_filename, network_path, md5_string, local_path))
             else:
                 files.append(model.FileMode(old_filename, "不符合文件类型"))
-        # 生成csv
-        csv_path = service.list2csv(files)
         # 插入数据库
         db_files = [_f for _f in files if not _f.md5_name is None]
         if not service.insert_files(db_files):
             abort(500)
+        # 生成csv
+        csv_path = service.list2csv(files)
         # 结果集
         result = {"fcsv": url_for('index', _external=True) + 'record/' + csv_path, "paths": files}
         return json.dumps(result, default=model.file2dict, )
