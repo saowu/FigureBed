@@ -7,12 +7,10 @@ __author__ = 'saowu'
 
 import hashlib
 import os
-import re
 import time
 import pandas as pd
-from flask import url_for
 
-from src.application import app
+from src.application import app, db
 
 
 def init_dirs():
@@ -42,13 +40,10 @@ def get_image_stream(filename):
     :param filename: 文件名
     :return: 文件流，文件类型
     '''
-    listdir = os.listdir(app.config['UPLOAD_FOLDER'])
-    for _name in listdir:
-        if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', _name):
-            filename = _name
-            break
-    if filename in listdir:
-        return [open(app.config['UPLOAD_FOLDER'] + filename, 'rb'), filename.rsplit('.', 1)[1]]
+    sql = "select * from t_files where name = %s;"
+    file_model = db.fetch_one(sql, filename)
+    if not file_model is None:
+        return [open(file_model["path"], 'rb'), file_model["type"]]
     else:
         pass
 
@@ -60,14 +55,10 @@ def get_record_stream(filename):
     :return: 文件流，文件类型
     '''
     listdir = os.listdir(app.config['RECORD_FOLDER'])
-    for _name in listdir:
-        if re.match(r'^' + filename + '\.(csv)$', _name):
-            filename = _name
-            break
-    if filename in listdir:
-        return [open(app.config['RECORD_FOLDER'] + filename, 'rb'), filename.rsplit('.', 1)[1]]
+    csv_ = filename + ".csv"
+    if csv_ in listdir:
+        return [open(app.config['RECORD_FOLDER'] + csv_, 'rb'), 'csv']
     else:
-        print(filename)
         pass
 
 
@@ -103,12 +94,13 @@ def get_link_dict(_file):
     :param _file: file_mode
     :return: dict
     '''
-    _markdown = '![{0}]({1})'.format(_file.name, _file.path)
-    _bbcode = '[url={0}][img]{1}[/img][/url]'.format(_file.path, _file.path)
-    _html = '<a href="{0}" target="_blank"><img src="{1}"></a>'.format(_file.path, _file.path)
-    _removal = _file.path.replace('image', 'removal')
+    _markdown = '![{0}]({1})'.format(_file.file_name, _file.network_path)
+    _bbcode = '[url={0}][img]{1}[/img][/url]'.format(_file.network_path, _file.network_path)
+    _html = '<a href="{0}" target="_blank"><img src="{1}"></a>'.format(_file.network_path, _file.network_path)
+    _removal = _file.network_path.replace('image', 'removal')
 
-    return {"file": _file.name, "link": _file.path, "markdown": _markdown, "html": _html, "bbcode": _bbcode,
+    return {"file": _file.file_name, "link": _file.network_path, "markdown": _markdown, "html": _html,
+            "bbcode": _bbcode,
             "removal": _removal}
 
 
@@ -118,12 +110,32 @@ def remove_image(filename):
     :param filename: 文件名
     :return: True/False
     '''
-    listdir = os.listdir(app.config['UPLOAD_FOLDER'])
-    for _name in listdir:
-        if re.match(r'^' + filename + '\.(png|jpg|jpeg|gif|pdf)$', _name):
-            try:
-                os.remove(app.config['UPLOAD_FOLDER'] + _name)
-                return True
-            except OSError as e:
-                print("Remove Error:", e)
-    return False
+    sql_d = "DELETE FROM t_files where name = %s;"
+    sql_s = "select * from t_files where name = %s;"
+    file_model = db.fetch_one(sql_s, filename)
+    if not file_model is None:
+        try:
+            os.remove(file_model["path"])
+        except OSError as e:
+            print("Remove Error:", e)
+        if db.delete_one(sql_d, filename) == 1:
+            return True
+    else:
+        return False
+
+
+def insert_files(files):
+    '''
+    多条插入数据库
+    :param files:
+    :return:
+    '''
+    data = []
+    for _file in files:
+        data.append((_file.md5_name, _file.local_path, _file.file_name.rsplit('.', 1)[1]))
+    sql = "INSERT INTO t_files (name,path,type) VALUES (%s,%s,%s);"
+    result = db.insert_many(sql, data)
+    if result == len(files):
+        return True
+    else:
+        return False
