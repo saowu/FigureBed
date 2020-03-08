@@ -32,55 +32,57 @@ class DBUtil(object):
         )
         print(" * Initialize database connection pool ...")
 
-        def create_conn_cursor(self):
-            conn = self.pool.connection()
-            cursor = conn.cursor(pymysql.cursors.DictCursor)
-            return conn, cursor
+    def create_conn_cursor(self):
+        conn = self.pool.connection()
+        cursor = conn.cursor(pymysql.cursors.DictCursor)
+        return conn, cursor
 
-        def fetch_one(self, sql, args):
-            '''
-            查询一条数据
-            :param sql:
-            :param args:
-            :return:
-            '''
-            conn, cursor = self.create_conn_cursor()
-            cursor.execute(sql, args)
-            result = cursor.fetchone()
-            cursor.close()
-            conn.close()
-            return result
+    def fetch_one(self, sql, args):
+        '''
+        查询一条数据
+        :param sql:
+        :param args:
+        :return:
+        '''
+        conn, cursor = self.create_conn_cursor()
+        cursor.execute(sql, args)
+        result = cursor.fetchone()
+        cursor.close()
+        conn.close()
+        return result
 
-        def insert_many(self, sql, args):
-            '''
-            插入多条数据
-            :param sql:
-            :param args:
-            :return:
-            '''
-            conn, cursor = self.create_conn_cursor()
-            try:
-                result = cursor.executemany(sql, args)
-                conn.commit()
-            except Exception as e:
-                conn.rollback()
-            cursor.close()
-            conn.close()
-            return result
+    def insert_many(self, sql, args):
+        '''
+        插入多条数据
+        :param sql:
+        :param args:
+        :return:
+        '''
+        conn, cursor = self.create_conn_cursor()
+        try:
+            result = cursor.executemany(sql, args)
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            app.logger.error(e)
+        cursor.close()
+        conn.close()
+        return result
 
-        def delete_one(self, sql, args):
-            '''
-            删除一条数据
-            :param sql:
-            :param args:
-            :return:
-            '''
-            conn, cursor = self.create_conn_cursor()
-            try:
-                result = cursor.execute(sql, args)
-                conn.commit()
-            except Exception as e:
-                conn.rollback()
-            cursor.close()
-            conn.close()
-            return result
+    def delete_one(self, sql, args):
+        '''
+        删除一条数据
+        :param sql:
+        :param args:
+        :return:
+        '''
+        conn, cursor = self.create_conn_cursor()
+        try:
+            result = cursor.execute(sql, args)
+            conn.commit()
+        except Exception as e:
+            conn.rollback()
+            app.logger.error(e)
+        cursor.close()
+        conn.close()
+        return result

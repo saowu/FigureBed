@@ -143,11 +143,8 @@ def insert_files(files):
     for _file in files:
         data.append((_file.md5_name, _file.local_path, _file.file_name.rsplit('.', 1)[1]))
     sql = "INSERT INTO t_files (name,path,type) VALUES (%s,%s,%s);"
-    try:
-        result = db.insert_many(sql, data)
-        if result == len(files):
-            return True
-        else:
-            return False
-    except Exception as e:
-        app.logger.error("insert_files Error:", e)
+    result = db.insert_many(sql, data)
+    if result == len(files):
+        return True
+    else:
+        return False
