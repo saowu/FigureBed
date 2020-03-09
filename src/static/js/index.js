@@ -46,7 +46,7 @@ window.onload = function () {
                     success: function (result) {
                         let fcsv = result.fcsv;
                         let paths = result.paths;
-
+                        $(".alert-danger").css("display", "none");
                         $(".alert-success").css("display", "");
                         $(".label.label-info").attr("href", fcsv);
 
@@ -58,6 +58,7 @@ window.onload = function () {
                         }
                     },
                     error: function (result) {
+                        $("#upLoad").val("");
                         $("#display-1").css("display", "");
                         $("#display-2").css("display", "none");
                         $(".alert-danger").css("display", "");
