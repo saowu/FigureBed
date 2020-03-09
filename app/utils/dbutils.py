@@ -8,11 +8,11 @@ __author__ = 'saowu'
 import pymysql
 from DBUtils.PooledDB import PooledDB
 
-from src.application import app
-
 
 class DBUtil(object):
+
     def __init__(self, host, port, database, user, password, ):
+        # 数据库连接池
         self.pool = PooledDB(
             creator=pymysql,
             maxconnections=6,
@@ -30,6 +30,7 @@ class DBUtil(object):
             database=database,
             charset='utf8'
         )
+
         print(" * Initialize database connection pool ...")
 
     def create_conn_cursor(self):
@@ -64,7 +65,6 @@ class DBUtil(object):
             conn.commit()
         except Exception as e:
             conn.rollback()
-            app.logger.error(e)
         cursor.close()
         conn.close()
         return result
@@ -82,7 +82,6 @@ class DBUtil(object):
             conn.commit()
         except Exception as e:
             conn.rollback()
-            app.logger.error(e)
         cursor.close()
         conn.close()
         return result

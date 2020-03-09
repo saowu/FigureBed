@@ -1,23 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-' src module '
+' a test module '
 
 __author__ = 'saowu'
 
 import hashlib
 import os
 import time
-import pandas as pd
 
-from src import dbutils
-from src.application import app
+import pandas as pd
+import app
 
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
-
-# 初始化数据库连接池
-db = dbutils.DBUtil(app.config['DB_HOST'], app.config['DB_PORT'], app.config['DATABASE'], app.config['USER_NAME'],
-                    app.config['PASSWORD'])
 
 
 def allowed_file(filename):
@@ -39,7 +34,7 @@ def save_images(file):
     old_filename = file.filename
     md5_string = get_name_md5(old_filename.rsplit('.', 1)[0])
     new_filename = md5_string + "." + old_filename.rsplit('.', 1)[1]
-    file.save(os.path.join(app.config['UPLOAD_FOLDER'], new_filename))
+    file.save(os.path.join(app.app.config['UPLOAD_FOLDER'], new_filename))
     return md5_string, new_filename
 
 
@@ -50,7 +45,7 @@ def get_image_stream(filename):
     :return: 文件流，文件类型
     '''
     sql = "select * from t_files where name = %s;"
-    file_model = db.fetch_one(sql, filename)
+    file_model = app.db.fetch_one(sql, filename)
     if not file_model is None:
         return [open(file_model["path"], 'rb'), file_model["type"]]
     else:
@@ -63,10 +58,10 @@ def get_record_stream(filename):
     :param filename: 文件名
     :return: 文件流，文件类型
     '''
-    listdir = os.listdir(app.config['RECORD_FOLDER'])
+    listdir = os.listdir(app.app.config['RECORD_FOLDER'])
     csv_ = filename + ".csv"
     if csv_ in listdir:
-        return [open(app.config['RECORD_FOLDER'] + csv_, 'rb'), 'csv']
+        return [open(app.app.config['RECORD_FOLDER'] + csv_, 'rb'), 'csv']
     else:
         pass
 
@@ -92,7 +87,7 @@ def list2csv(file_list):
         _data.append(get_link_dict(_file))
     frame_data = pd.DataFrame(columns=["file", "link", "markdown", "html", "bbcode", "removal"], data=_data)
     csv_name = get_name_md5("record")
-    csv_path = app.config['RECORD_FOLDER'] + csv_name + ".csv"
+    csv_path = app.app.config['RECORD_FOLDER'] + csv_name + ".csv"
     frame_data.to_csv(csv_path)
     return csv_name
 
@@ -121,13 +116,10 @@ def remove_image(filename):
     '''
     sql_d = "DELETE FROM t_files where name = %s;"
     sql_s = "select * from t_files where name = %s;"
-    file_model = db.fetch_one(sql_s, filename)
+    file_model = app.db.fetch_one(sql_s, filename)
     if not file_model is None:
-        try:
-            os.remove(file_model["path"])
-        except OSError as e:
-            app.logger.error("remove_image Error:", e)
-        if db.delete_one(sql_d, filename) == 1:
+        os.remove(file_model["path"])
+        if app.db.delete_one(sql_d, filename) == 1:
             return True
     else:
         return False
@@ -143,9 +135,8 @@ def insert_files(files):
     for _file in files:
         data.append((_file.md5_name, _file.local_path, _file.file_name.rsplit('.', 1)[1]))
     sql = "INSERT INTO t_files (name,path,type) VALUES (%s,%s,%s);"
-    result = db.insert_many(sql, data)
+    result = app.db.insert_many(sql, data)
     if result == len(files):
         return True
     else:
         return False
-
