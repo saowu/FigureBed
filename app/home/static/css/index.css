@@ -124,7 +124,7 @@ h4 code {
 .bs-docs-nav .navbar-nav > li > a:hover,
 .bs-docs-nav .navbar-nav > .active > a,
 .bs-docs-nav .navbar-nav > .active > a:hover {
-    color: #463265;
+    color: #563d7c;
     background-color: #f9f9f9;
 }
 
@@ -149,6 +149,7 @@ h4 code {
     color: #99979c;
     text-align: center;
     background-color: #2a2730;
+
 }
 
 .bs-docs-footer a {
@@ -1759,5 +1760,24 @@ h1[id] {
 @media print {
     a[href]:after {
         content: "" !important;
+    }
+}
+
+.jumbotron-background {
+    background-image: linear-gradient(to right, #9370DB, #9198e5);
+    /*animation: bganimation 5s;*/
+    /*animation-iteration-count:infinite;*/
+    color: #eeeeee;
+}
+
+@keyframes bganimation {
+    0% {
+        background: #9370DB;
+    }
+    50% {
+        background: #9198e5;
+    }
+     100% {
+        background: #9370DB;
     }
 }
