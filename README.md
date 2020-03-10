@@ -17,18 +17,6 @@
 5.使用mysql数据库
 ```
 
-#### 版本配置
-
-```
-Package      Version
------------- -------
-Flask        1.1.1  
-Jinja2       2.11.1 
-pandas       1.0.1 
-DBUtils      1.3 
-PyMySQL      0.9.3 
-Flask-APScheduler 1.11.0
-```
 #### UI展示
 
 ![FireShot Capture 016 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/08/w2DySmnMEWtFNck.png)
