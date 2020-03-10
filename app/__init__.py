@@ -5,20 +5,20 @@
 
 __author__ = 'saowu'
 
+import atexit
+import fcntl
 import logging
 import os
 
 from flask import Flask
-from flask_apscheduler import APScheduler
 
 from app import config
 from app.config import UploadConfig, DBConfig, SchedulerConfig, LogConfig
 from app.home import home as home_blueprint
 from app.utils import dbutils
+from app.utils.apsutils import init_scheduler
 
 app = Flask("FigureBed")
-
-scheduler = APScheduler()
 
 app.debug = False
 
@@ -52,6 +52,4 @@ db = dbutils.DBUtil(app.config['DB_HOST'], app.config['DB_PORT'], app.config['DA
                     app.config['PASSWORD'])
 
 # 定时任务
-scheduler.init_app(app)
-scheduler.start()
-print(" * scheduler 'clean_csv_files' start...")
+init_scheduler(app)
