@@ -10,6 +10,7 @@ from DBUtils.PooledDB import PooledDB
 
 
 class DBUtil(object):
+    __instance = None
 
     def __init__(self, host, port, database, user, password, ):
         # 数据库连接池
@@ -31,7 +32,13 @@ class DBUtil(object):
             charset='utf8'
         )
 
-        print(" * Initialize database connection pool ...")
+    # 实现单例
+    def __new__(cls, *args, **kwargs):
+        if cls.__instance is None:
+            cls.__instance = object.__new__(cls)
+            return cls.__instance
+        else:
+            return cls.__instance
 
     def create_conn_cursor(self):
         conn = self.pool.connection()

@@ -17,6 +17,12 @@
 5.使用mysql数据库
 6.支持拖动上传
 ```
+#### Docker部署
+```
+docker build -t saowu/figurebed:1.0 .
+docker run --name figurebed1  -p 8888:8888 -v /home/myDataVolume:/myDataVolume -d saowu/figurebed:1.0
+```
+
 
 #### UI展示
 

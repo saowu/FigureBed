@@ -5,6 +5,8 @@
 
 __author__ = 'saowu'
 
+import os
+
 from app import app
 
 '''

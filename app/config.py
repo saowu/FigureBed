@@ -5,23 +5,27 @@
 
 __author__ = 'saowu'
 
+import atexit
+import fcntl
 import logging
 import os
 import time
+
+from flask_apscheduler import APScheduler
 
 
 class UploadConfig(object):
     # images path
     UPLOAD_FOLDER = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myVolume/uploads/'
+        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myDataVolume/uploads/'
     # csv path
     RECORD_FOLDER = os.path.abspath(
-        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myVolume/records/'
+        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myDataVolume/records/'
 
 
 class DBConfig(object):
     # mysql
-    DB_HOST = '127.0.0.1'
+    DB_HOST = '118.89.237.69'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'
@@ -30,7 +34,8 @@ class DBConfig(object):
 
 class LogConfig(object):
     # logging
-    LOG_FOLDER = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + "/myVolume/fb_logs/"
+    LOG_FOLDER = os.path.abspath(
+        os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + "/myDataVolume/fb_logs/"
     LOG_FILENAME = 'logger-' + time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".log"
     LOG_LEVEL = logging.WARNING
 
@@ -40,20 +45,10 @@ class SchedulerConfig(object):
     JOBS = [
         {
             'id': 'clean_csv_files',
-            'func': 'app:config.clean_csv_files',
+            'func': 'app:utils.apsutils.clean_csv_files',
             'trigger': 'interval',
-            # 'days': 1,
-            'minutes': 5,
+            'days': 1,
+            # 'seconds': 20,
         }
     ]
-
-
-def clean_csv_files():
-    '''
-    清空csv文件
-    :return:
-    '''
-    ls = os.listdir(UploadConfig.RECORD_FOLDER)
-    for name in ls:
-        os.remove(UploadConfig.RECORD_FOLDER + name)
-        print('deleting-->', name)
+    SCHEDULER_API_ENABLED = True
