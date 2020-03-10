@@ -27,6 +27,9 @@ app.config.from_object(DBConfig())
 app.config.from_object(SchedulerConfig())
 app.config.from_object(LogConfig())
 
+# 注册
+app.register_blueprint(home_blueprint)
+
 # 创建image,csv,log目录
 if not os.path.exists(app.config['UPLOAD_FOLDER']):
     os.makedirs(r'' + app.config['UPLOAD_FOLDER'])
@@ -48,8 +51,6 @@ app.logger.addHandler(handler)
 db = dbutils.DBUtil(app.config['DB_HOST'], app.config['DB_PORT'], app.config['DATABASE'], app.config['USER_NAME'],
                     app.config['PASSWORD'])
 
-# 注册
-app.register_blueprint(home_blueprint)
 # 定时任务
 scheduler.init_app(app)
 scheduler.start()
