@@ -1,7 +1,11 @@
 /*Figure bed*/
 
 window.onload = function () {
-    //监听上传进度
+    /**
+     * 上传进度监听
+     * @param fun
+     * @returns {function(...[*]=)}
+     */
     let xhrOnProgress = function (fun) {
         xhrOnProgress.onprogress = fun;
         return function () {
@@ -15,8 +19,11 @@ window.onload = function () {
         }
     };
 
+    /**
+     * 上传函数
+     * @param fileList
+     */
     function upload(fileList) {
-
         if (fileList.length < 5) {
 
             $("#display-1").css("display", "none");
@@ -67,7 +74,7 @@ window.onload = function () {
 
     }
 
-
+    /*取消默认拖动效果*/
     document.addEventListener("drop", function (e) {  //拖离
         e.preventDefault();
     });
@@ -81,13 +88,17 @@ window.onload = function () {
         e.preventDefault();
     });
 
-
+    /**
+     * 监听文件拖动
+     */
     document.getElementById('dropzone').addEventListener("drop", function (e) {
-        let fileList = e.dataTransfer.files; //获取文件对象
+        let fileList = e.dataTransfer.files;
         //检测是否是拖拽文件到页面的操作
         upload(fileList);
     }, false);
-
+    /**
+     * 监听选中状态
+     */
     $('body').on('change', '#upLoad', function (e) {
         let fileList = $('#upLoad')[0].files;
         upload(fileList);

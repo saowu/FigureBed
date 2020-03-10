@@ -21,7 +21,7 @@ class UploadConfig(object):
 
 class DBConfig(object):
     # mysql
-    DB_HOST = '118.89.237.69'
+    DB_HOST = '127.0.0.1'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'
@@ -43,7 +43,7 @@ class SchedulerConfig(object):
             'func': 'app:config.clean_csv_files',
             'trigger': 'interval',
             # 'days': 1,
-            'minutes': 1,
+            'minutes': 5,
         }
     ]
 
