@@ -47,17 +47,18 @@
                 <strong>注意！</strong>上传后的图片可通过 .csv 文件内的<code>removal</code>链接请求删除，刷新页面后，本页数据不会保存，请谨慎操作！
             </div>
             <div class="bs-docs-section bs-customizer-import">
-                <div class="bs-dropzone">
+                <div class="bs-dropzone" id="dropzone">
                     <div id="display-1">
                         <div class="import-header">
                             <span class="glyphicon glyphicon-level-up" aria-hidden="true"></span>
                         </div>
                         <p class="lead">上传你的 <code>pdf, png, jpg, jpeg, gif</code> 文件。</p>
-                        <label id="import-manual-trigger" class="btn-link">
-                            手动选择
-                            <input type="file" accept="application/pdf,image/jpeg,image/png,image/gif" id="upLoad"
-                                   class="hidden" multiple="multiple">
-                        </label>
+                        <p>将文件一起拖拽到这里或
+                            <label id="import-manual-trigger" class="btn-link">手动选择
+                                <input type="file" accept="application/pdf,image/jpeg,image/png,image/gif" id="upLoad"
+                                       class="hidden" multiple="multiple">
+                            </label>
+                        </p>
                     </div>
                     <!--         隐藏  start        -->
                     <div id="display-2" style="margin-top: 45px;display: none">

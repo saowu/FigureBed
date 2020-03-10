@@ -15,6 +15,7 @@
 3.支持返回多种链接格式 （link, markdown, html, bbcode，removal）
 4.可以通过removal链接自行删除图片文件
 5.使用mysql数据库
+6.支持拖动上传
 ```
 
 #### UI展示

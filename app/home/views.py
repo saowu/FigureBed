@@ -68,4 +68,5 @@ def remove_images(filename):
     is_remove = service.remove_image(filename)
     if is_remove is False:
         abort(404)
-    return '<h1>Remove Success！</h1>'
+    else:
+        return '<h1>Remove Success！</h1>'
