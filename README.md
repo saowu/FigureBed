@@ -2,7 +2,7 @@
 
 >Flask 个人图床
 
-demo website：http://118.89.237.69.8000
+demo website：http://118.89.237.69:8000
 
 [![Build Status](https://img.shields.io/travis/otale/tale.svg?style=flat-square)](https://github.com/saowu/FigureBed)
 [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/saowu/FigureBed)
