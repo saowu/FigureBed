@@ -2,11 +2,12 @@
 
 >Flask 个人图床
 
-[![GitHub issues](https://img.shields.io/github/issues/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/issues)
-[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/network)
-[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed/stargazers)
-[![GitHub license](https://img.shields.io/github/license/saowu/FigureBed.svg)](https://github.com/saowu/FigureBed)
+demo website：http://118.89.237.8000
 
+[![Build Status](https://img.shields.io/travis/otale/tale.svg?style=flat-square)](https://github.com/saowu/FigureBed)
+[![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/saowu/FigureBed)
+[![@saowu on zhihu](https://img.shields.io/badge/zhihu-saowu-red.svg?style=flat-square)](https://www.zhihu.com/people/saowu)
+[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg?style=flat-square)](https://github.com/saowu/FigureBed/stargazers)
 
 #### 功能支持
 ```
@@ -26,7 +27,6 @@ confug.py
 docker build -t saowu/figurebed:1.0 .
 docker run  -p 8000:8888 -v /home/myDataVolume:/myDataVolume -d saowu/figurebed:1.0
 ```
-
 
 #### UI展示
 
