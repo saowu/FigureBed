@@ -19,8 +19,12 @@
 ```
 #### Docker部署
 ```
+confug.py
+修改为自己的公网host:port用于返回图片链接
+修改自己的数据库host:port
+
 docker build -t saowu/figurebed:1.0 .
-docker run --name figurebed1  -p 8888:8888 -v /home/myDataVolume:/myDataVolume -d saowu/figurebed:1.0
+docker run  -p 8000:8888 -v /home/myDataVolume:/myDataVolume -d saowu/figurebed:1.0
 ```
 
 

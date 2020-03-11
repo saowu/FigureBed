@@ -145,8 +145,9 @@ h4 code {
 .bs-docs-footer {
     padding-top: 20px;
     padding-bottom: 20px;
+    width: 95%;
     margin-top: 40px;
-    color: #99979c;
+    color: #ffffff;
     text-align: center;
     background-color: #2a2730;
 
@@ -156,35 +157,33 @@ h4 code {
     color: #fff;
 }
 
-.bs-docs-footer-links {
-    padding-left: 0;
-    margin-bottom: 20px;
+.bs-docs-footer p {
+    margin-bottom: 0;
 }
 
-.bs-docs-footer-links li {
-    display: inline-block;
-}
-
-.bs-docs-footer-links li + li {
-    margin-left: 15px;
+.bs-docs-footer {
+    text-align: left;
 }
 
 @media (min-width: 768px) {
     .bs-docs-footer {
-        text-align: left;
-    }
-
-    .bs-docs-footer p {
-        margin-bottom: 0;
+        width: 720px;
     }
 }
 
 
-/*
- * Homepage
- *
- * Tweaks to the custom homepage and the masthead (main jumbotron).
- */
+@media (min-width: 992px) {
+    .bs-docs-footer {
+        width: 940px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .bs-docs-footer {
+        width: 1140px;
+    }
+}
+
 
 /* Share masthead with page headers */
 .bs-docs-masthead,
@@ -1777,7 +1776,7 @@ h1[id] {
     50% {
         background: #9198e5;
     }
-     100% {
+    100% {
         background: #9370DB;
     }
 }

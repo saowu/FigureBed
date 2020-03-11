@@ -31,7 +31,7 @@ def upload_images():
         if file and service.allowed_file(old_filename):
             # 保存本地
             md5_string, new_filename = service.save_images(file)
-            network_path = url_for('.index', _external=True) + 'image/' + md5_string
+            network_path = app.config['IP'] + 'image/' + md5_string
             local_path = app.config['UPLOAD_FOLDER'] + new_filename
             files.append(FileMode(old_filename, network_path, md5_string, local_path))
         else:
@@ -43,7 +43,7 @@ def upload_images():
     # 生成csv
     csv_path = service.list2csv(files)
     # 结果集
-    result = {"fcsv": url_for('home.index', _external=True) + 'record/' + csv_path, "paths": files}
+    result = {"fcsv": app.config['IP'] + 'record/' + csv_path, "paths": files}
     return json.dumps(result, default=file2dict, )
 
 

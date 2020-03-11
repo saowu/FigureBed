@@ -15,6 +15,8 @@ from flask_apscheduler import APScheduler
 
 
 class UploadConfig(object):
+    # web host:port
+    IP = "http://127.0.0.1:8000/"
     # images path
     UPLOAD_FOLDER = os.path.abspath(
         os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myDataVolume/uploads/'
@@ -25,7 +27,7 @@ class UploadConfig(object):
 
 class DBConfig(object):
     # mysql
-    DB_HOST = '118.89.237.69'
+    DB_HOST = '127.0.0.1'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'
