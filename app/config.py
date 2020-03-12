@@ -5,8 +5,6 @@
 
 __author__ = 'saowu'
 
-import atexit
-import fcntl
 import logging
 import os
 import time
@@ -25,7 +23,7 @@ class UploadConfig(object):
 
 class DBConfig(object):
     # mysql Docker部署可填宿主机内网ip
-    DB_HOST = '192.168.0.102'
+    DB_HOST = '118.89.237.69'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'

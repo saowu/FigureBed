@@ -20,11 +20,9 @@ demo website：http://118.89.237.69:8000
 ```
 #### Docker部署
 ```
-
 $docker build -t saowu/figurebed:1.0 .
 $docker run  -p 8000:8888 -v /home/myDataVolume:/home/myDataVolume -d saowu/figurebed:1.0
 ```
-
 #### UI展示
 
 ![FireShot Capture 016 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/08/w2DySmnMEWtFNck.png)
