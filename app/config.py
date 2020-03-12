@@ -13,8 +13,8 @@ import time
 
 
 class UploadConfig(object):
-    # 外网ip
-    IP = "http://saowu.com:8000/"
+    # 外网ip和端口（如果添加了nginx代理，需要改成nginx的对外端口）
+    IP = "http://127.0.0.1:8000/"
     # images path
     UPLOAD_FOLDER = os.path.abspath(
         os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + '/myDataVolume/uploads/'
@@ -25,7 +25,7 @@ class UploadConfig(object):
 
 class DBConfig(object):
     # mysql Docker部署可填宿主机内网ip
-    DB_HOST = '192.168.0.3'
+    DB_HOST = '192.168.0.102'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'
