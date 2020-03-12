@@ -20,8 +20,13 @@ demo website：http://118.89.237.69:8000
 ```
 #### Docker部署
 ```
+#构建flask+gunicorn+gevent(+nginx)
 $docker build -t saowu/figurebed:1.0 .
 $docker run  -p 8000:8888 -v /home/myDataVolume:/home/myDataVolume -d saowu/figurebed:1.0
+
+#构建nginx(cd /nginx)
+$docker build -t saowu/nginx:1.0 .
+$docker run --name nginx1 -p 80:80 -d saowu/nginx:1.0
 ```
 #### UI展示
 

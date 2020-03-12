@@ -23,7 +23,7 @@ class UploadConfig(object):
 
 class DBConfig(object):
     # mysql Docker部署可填宿主机内网ip
-    DB_HOST = '118.89.237.69'
+    DB_HOST = '127.0.0.1'
     DB_PORT = '3306'
     DATABASE = 'figurebed'
     USER_NAME = 'root'
