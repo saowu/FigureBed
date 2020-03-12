@@ -20,12 +20,9 @@ demo website：http://118.89.237.69:8000
 ```
 #### Docker部署
 ```
-confug.py
-修改为自己的公网域名用于返回图片链接
-修改自己的数据库host:port
 
-docker build -t saowu/figurebed:1.0 .
-docker run  -p 8000:8888 -v /home/myDataVolume:/myDataVolume -d saowu/figurebed:1.0
+$docker build -t saowu/figurebed:1.0 .
+$docker run  -p 8000:8888 -v /home/myDataVolume:/home/myDataVolume -d saowu/figurebed:1.0
 ```
 
 #### UI展示
