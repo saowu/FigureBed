@@ -29,7 +29,6 @@ $docker build -t saowu/nginx:1.0 .
 $docker run --name nginx1 -p 80:80 -d saowu/nginx:1.0
 ```
 #### UI展示
+![FireShot Capture 017 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/13/raDBuAvLoT9Rw6I.png)
 
-![FireShot Capture 016 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/08/w2DySmnMEWtFNck.png)
-
-![FireShot Capture 015 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/07/q3H1JDFRSwCLm87.png)
+![FireShot Capture 018 - Figure bed - 127.0.0.1.png](https://i.loli.net/2020/03/13/S6ZJDbieEfmvaRX.png)
