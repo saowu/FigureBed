@@ -6,7 +6,7 @@ demo website：http://118.89.237.69:8000
 
 [![Build Status](https://img.shields.io/travis/otale/tale.svg?style=flat-square)](https://github.com/saowu/FigureBed)
 [![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/saowu/FigureBed)
-[![@saowu on zhihu](https://img.shields.io/badge/zhihu-saowu-red.svg?style=flat-square)](https://www.zhihu.com/people/saowu)
+[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed.svg?style=flat-square)](https://github.com/saowu/FigureBed/network)
 [![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg?style=flat-square)](https://github.com/saowu/FigureBed/stargazers)
 
 #### 功能支持
