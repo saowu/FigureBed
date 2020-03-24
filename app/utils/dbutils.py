@@ -31,7 +31,7 @@ class DBUtil(object):
             database=database,
             charset='utf8'
         )
-        # 日志
+        # 日志打印4次没关系，做了单例
         from .. import app
         app.logger.warning('PooledDB init success...')
 
