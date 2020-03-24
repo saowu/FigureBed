@@ -35,7 +35,6 @@ class LogConfig(object):
     LOG_FOLDER = os.path.abspath(
         os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)) + "/myDataVolume/fb_logs/"
     LOG_FILENAME = 'logger-' + time.strftime('%Y-%m-%d', time.localtime(time.time())) + ".log"
-    LOG_LEVEL = logging.WARNING
 
 
 class SchedulerConfig(object):

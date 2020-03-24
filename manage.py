@@ -8,5 +8,4 @@ __author__ = 'saowu'
 from app import app
 
 if __name__ == '__main__':
-    # print(app.__dict__['url_map'])
-    app.run()
+    app.run(host='127.0.0.1', port=8000)

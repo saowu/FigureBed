@@ -31,6 +31,9 @@ class DBUtil(object):
             database=database,
             charset='utf8'
         )
+        # 日志
+        from .. import app
+        app.logger.warning('PooledDB init success...')
 
     # 实现单例
     def __new__(cls, *args, **kwargs):

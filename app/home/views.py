@@ -7,21 +7,27 @@ __author__ = 'saowu'
 
 import json
 
-from flask import request, url_for, abort, Response, render_template
+from flask import request, abort, Response, render_template
 from . import home
 from . import service, ACCEPT_TYPE
-
 from ..models import file2dict, FileMode
 
 
 @home.route('/', methods=['GET'])
 def index():
+    # 日志
+    from .. import app
+    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+
     return render_template('index.html')
 
 
 @home.route('/upload', methods=['POST'])
 def upload_images():
-    from app import app
+    # 日志
+    from .. import app
+    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+
     file_list = request.files.getlist('files')
     files = []
     # 获取image对象
@@ -49,6 +55,10 @@ def upload_images():
 
 @home.route('/image/<filename>', methods=['GET'])
 def download_images(filename):
+    # 日志
+    from .. import app
+    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+
     image_info = service.get_image_stream(filename)
     if image_info is None:
         abort(404)
@@ -57,6 +67,10 @@ def download_images(filename):
 
 @home.route('/record/<filename>', methods=['GET'])
 def download_records(filename):
+    # 日志
+    from .. import app
+    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+
     csv_info = service.get_record_stream(filename)
     if csv_info is None:
         abort(404)
@@ -65,6 +79,10 @@ def download_records(filename):
 
 @home.route('/removal/<filename>', methods=['GET'])
 def remove_images(filename):
+    # 日志
+    from .. import app
+    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+
     is_remove = service.remove_image(filename)
     if is_remove is False:
         abort(404)

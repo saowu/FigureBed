@@ -18,10 +18,10 @@ def clean_csv_files():
     :return:
     '''
     from app import app
-    print("pid:", os.getpid(), "scheduler-clean_csv_files")
     ls = os.listdir(app.config["RECORD_FOLDER"])
     for name in ls:
         os.remove(app.config["RECORD_FOLDER"] + name)
+    app.logger.warning("pid:", os.getpid(), "scheduler-clean_csv_files")
 
 
 def init_scheduler(app):
@@ -31,6 +31,8 @@ def init_scheduler(app):
         scheduler = APScheduler()
         scheduler.init_app(app)
         scheduler.start()
+        from .. import app
+        app.logger.warning('scheduler init success...')
     except:
         pass
 
