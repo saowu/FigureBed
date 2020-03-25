@@ -57,7 +57,8 @@ def upload_images():
 def download_images(filename):
     # 日志
     from .. import app
-    app.logger.warning({'path': request.path, 'remote_addr': request.remote_addr})
+    app.logger.warning(
+        {'path': request.path, 'remote_addr': request.remote_addr, 'Range': request.headers.get("Range")})
 
     image_info = service.get_image_stream(filename)
     if image_info is None:
