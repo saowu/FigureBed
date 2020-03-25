@@ -8,8 +8,9 @@ __author__ = 'saowu'
 import hashlib
 import os
 import time
-
 import pandas as pd
+from flask import send_file
+
 import app
 
 ALLOWED_EXTENSIONS = {'pdf', 'png', 'jpg', 'jpeg', 'gif'}
@@ -46,8 +47,8 @@ def get_image_stream(filename):
     '''
     sql = "select * from t_files where name = %s;"
     file_model = app.db.fetch_one(sql, filename)
-    if not file_model is None:
-        return [open(file_model["path"], 'rb'), file_model["type"]]
+    if file_model is not None:
+        return send_file(file_model["path"])
     else:
         pass
 
@@ -61,7 +62,7 @@ def get_record_stream(filename):
     listdir = os.listdir(app.app.config['RECORD_FOLDER'])
     csv_ = filename + ".csv"
     if csv_ in listdir:
-        return [open(app.app.config['RECORD_FOLDER'] + csv_, 'rb'), 'csv']
+        return send_file(app.app.config['RECORD_FOLDER'] + csv_, as_attachment=True)
     else:
         pass
 
@@ -85,7 +86,7 @@ def list2csv(file_list):
     _data = []
     for _file in file_list:
         _data.append(get_link_dict(_file))
-    frame_data = pd.DataFrame(columns=["file", "link", "markdown", "html", "bbcode", "removal"], data=_data)
+    frame_data = pd.DataFrame(columns=["file", "link", "markdown", "html", "bbcode", "remove"], data=_data)
     csv_name = get_name_md5("record")
     csv_path = app.app.config['RECORD_FOLDER'] + csv_name + ".csv"
     frame_data.to_csv(csv_path)
@@ -101,11 +102,11 @@ def get_link_dict(_file):
     _markdown = '![{0}]({1})'.format(_file.file_name, _file.network_path)
     _bbcode = '[url={0}][img]{1}[/img][/url]'.format(_file.network_path, _file.network_path)
     _html = '<a href="{0}" target="_blank"><img src="{1}"></a>'.format(_file.network_path, _file.network_path)
-    _removal = _file.network_path.replace('image', 'removal')
+    _remove = _file.network_path.replace('image', 'remove')
 
     return {"file": _file.file_name, "link": _file.network_path, "markdown": _markdown, "html": _html,
             "bbcode": _bbcode,
-            "removal": _removal}
+            "remove": _remove}
 
 
 def remove_image(filename):

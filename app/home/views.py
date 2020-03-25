@@ -7,9 +7,9 @@ __author__ = 'saowu'
 
 import json
 
-from flask import request, abort, Response, render_template
+from flask import request, abort, render_template, make_response
 from . import home
-from . import service, ACCEPT_TYPE
+from . import service
 from ..models import file2dict, FileMode
 
 
@@ -62,7 +62,7 @@ def download_images(filename):
     image_info = service.get_image_stream(filename)
     if image_info is None:
         abort(404)
-    return Response(image_info[0], mimetype=ACCEPT_TYPE[image_info[1]])
+    return make_response(image_info)
 
 
 @home.route('/record/<filename>', methods=['GET'])
@@ -74,10 +74,10 @@ def download_records(filename):
     csv_info = service.get_record_stream(filename)
     if csv_info is None:
         abort(404)
-    return Response(csv_info[0], mimetype=ACCEPT_TYPE[csv_info[1]])
+    return make_response(csv_info)
 
 
-@home.route('/removal/<filename>', methods=['GET'])
+@home.route('/remove/<filename>', methods=['GET'])
 def remove_images(filename):
     # 日志
     from .. import app
