@@ -4,10 +4,10 @@
 
 demo website：http://esc.saowu.top:8000
 
-[![Build Status](https://img.shields.io/travis/otale/tale.svg?style=flat-square)](https://github.com/saowu/FigureBed)
-[![License](https://img.shields.io/badge/license-MIT-4EB1BA.svg?style=flat-square)](https://github.com/saowu/FigureBed)
-[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed.svg?style=flat-square)](https://github.com/saowu/FigureBed/network)
-[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed.svg?style=flat-square)](https://github.com/saowu/FigureBed/stargazers)
+[![GitHub issues](https://img.shields.io/github/issues/saowu/FigureBed?style=for-the-badge)](https://github.com/saowu/FigureBed/issues)
+[![GitHub forks](https://img.shields.io/github/forks/saowu/FigureBed?style=for-the-badge)](https://github.com/saowu/FigureBed/network)
+[![GitHub license](https://img.shields.io/github/license/saowu/FigureBed?style=for-the-badge)](https://github.com/saowu/FigureBed/blob/master/LICENSE)
+[![GitHub stars](https://img.shields.io/github/stars/saowu/FigureBed?style=for-the-badge)](https://github.com/saowu/FigureBed/stargazers)
 
 #### 功能支持
 ```
